@@ -1,0 +1,63 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
+
+body, html {
+  font-family: 'Inter', sans-serif;
+}
+
+button {
+  background: none;
+  background-color: transparent;
+  border: none;
+}
+
+.SessionInformation h2{
+  font-size: 50px;
+  margin-bottom: 0.2em;
+}
+
+.SessionInformation h1{
+  font-size: 80px;
+  margin-top: 0;  
+}
+
+.SessionInformation{
+  margin-top:4em;
+}
+
+.Countdown {
+  background-image: url('cloud_graphic.svg');
+  background-size: contain; 
+  background-repeat: no-repeat;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 7em;
+  padding: 2em;
+}
+
+
+.Controls{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1em;
+}
+
+.Controls button{
+  font-size: 25px;
+  font-weight: bold;
+  background-image: url('cloud_graphic.svg');
+  background-size: contain; 
+  background-repeat: no-repeat;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3em;
+}
+
+.Timer-root{
+  margin:auto;
+  padding-top: 7em;
+}

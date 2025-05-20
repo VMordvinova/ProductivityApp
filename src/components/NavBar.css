@@ -1,0 +1,21 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
+
+.nav{
+    display: flex;
+    background-color: #003751;
+    font-size: 15px;
+    font-family: 'Inter', sans-serif;
+    color: #fff;
+}
+
+button{
+    background-image: url("sun_graphic.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 40px 40px; /* Set width and height */
+    width: 60px;                /* Optional: set button size */
+    height: 75px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
