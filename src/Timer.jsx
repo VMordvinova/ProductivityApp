@@ -5,69 +5,77 @@ const BREAK_DURATION = 5*60;
 const LONG_BREAK_DURATION = 15*60;
 
 const Timer = () => {
-  const [timeLeft, setTimeLeft] = useState(WORK_DURATION);
-  const [isRunning, setIsRunning] = useState(false);
-  const [isWorkSession, setIsWorkSession] = useState(true);
-  const intervalRef = useRef(null);
-  const sessionsCompleted = 0;
+    const [timeLeft, setTimeLeft] = useState(WORK_DURATION);
+    const [isRunning, setIsRunning] = useState(false);
+    const [isWorkSession, setIsWorkSession] = useState(true);
+    const [sessionsCompleted, setSessionsCompleted] = useState(0);
+    const intervalRef = useRef(null);
+    const [currentSession, setCurrentSession] = useState('Work Session');
 
-  useEffect(() => {
+
+    useEffect(() => {
     if (isRunning && timeLeft > 0) {
-      intervalRef.current = setInterval(() => {
-        setTimeLeft((prev) => {
-          if (prev <= 1) {
-            clearInterval(intervalRef.current);
-            switchMode();
-            return 0;
-          }
-          return prev - 1;
-        });
-      }, 1000);
+        intervalRef.current = setInterval(() => {
+        setTimeLeft((prev) => prev - 1);
+        }, 1000);
+    } else if (isRunning && timeLeft === 0) {
+        switchMode();
     }
 
     return () => clearInterval(intervalRef.current);
-  }, [isRunning, timeLeft]);
+    }, [isRunning, timeLeft]);
 
-  const switchMode = () => {
-    const nextIsWork = !isWorkSession;
-    setIsWorkSession(nextIsWork);
-    setTimeLeft(nextIsWork ? WORK_DURATION : BREAK_DURATION);
-    //setIsRunning(false); // pause at the end of each session
-  };
+    const switchMode = () => {
+        const nextIsWork = !isWorkSession;
+        setIsWorkSession(nextIsWork);
+        if(nextIsWork){
+            setTimeLeft(WORK_DURATION);
+            setSessionsCompleted((prev) => prev + 1);
+            setCurrentSession('Work Session');
+        } else if (!nextIsWork && sessionsCompleted < 3){
+            setTimeLeft(BREAK_DURATION);
+            setCurrentSession('Short Break');
+        } else if (!nextIsWork && sessionsCompleted == 3){
+            setTimeLeft(LONG_BREAK_DURATION);
+            setSessionsCompleted(0);
+            setCurrentSession('Long Break');
+        }
+    };
 
-  const startTimer = () => {
+    const startTimer = () => {
     if (timeLeft > 0) setIsRunning(true);
-  };
+    };
 
-  const pauseTimer = () => setIsRunning(false);
+    const pauseTimer = () => setIsRunning(false);
 
-  const resetTimer = () => {
+    const resetTimer = () => {
     setIsRunning(false);
     setIsWorkSession(true);
     setTimeLeft(WORK_DURATION);
-  };
+    setSessionsCompleted(0);
+    };
 
-  const formatTime = (seconds) => {
+    const formatTime = (seconds) => {
     const mins = String(Math.floor(seconds / 60)).padStart(2, '0');
     const secs = String(seconds % 60).padStart(2, '0');
     return `${mins}:${secs}`;
-  };
+    };
 
-  return (
+    return (
     <div style={{ textAlign: 'center', fontFamily: 'sans-serif' }}>
-      <h1>Pomodoro Timer</h1>
-      <h2>{isWorkSession ? 'Work Session' : 'Break Time'}</h2>
-      <h2>{formatTime(timeLeft)}</h2>
-      <div>
+        <h1>Pomodoro Timer</h1>
+        <h2>{currentSession}</h2>
+        <h2>{formatTime(timeLeft)}</h2>
+        <div>
         {!isRunning ? (
-          <button onClick={startTimer}>Start</button>
+            <button onClick={startTimer}>Start</button>
         ) : (
-          <button onClick={pauseTimer}>Pause</button>
+            <button onClick={pauseTimer}>Pause</button>
         )}
         <button onClick={resetTimer}>Reset</button>
-      </div>
+        </div>
     </div>
-  );
-};
+    );
+    };
 
 export default Timer;
