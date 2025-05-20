@@ -63,11 +63,12 @@ const Timer = () => {
     };
 
     return (
-    <div style={{ textAlign: 'center', fontFamily: 'sans-serif' }}>
-        <h1>Pomodoro Timer</h1>
+    <div className="Timer-root" style={{ textAlign: 'center' }}>
         <h2>{currentSession}</h2>
-        <h2>{formatTime(timeLeft)}</h2>
-        <div>
+        <div className="Countdown">
+            <h1>{formatTime(timeLeft)}</h1>
+        </div>
+        <div className="Controls">
         {!isRunning ? (
             <button onClick={startTimer}>Start</button>
         ) : (
