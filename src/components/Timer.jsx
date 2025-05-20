@@ -64,9 +64,11 @@ const Timer = () => {
 
     return (
     <div className="Timer-root" style={{ textAlign: 'center' }}>
-        <h2>{currentSession}</h2>
         <div className="Countdown">
-            <h1>{formatTime(timeLeft)}</h1>
+            <div className="SessionInformation">
+                <h2>{currentSession}</h2>
+                <h1>{formatTime(timeLeft)}</h1>
+            </div>
         </div>
         <div className="Controls">
         {!isRunning ? (
