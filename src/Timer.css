@@ -1,0 +1,5 @@
+button {
+  font-size: 1.2rem;   /* Increase text size */
+  padding: 6px 8px;  /* Increase button size */
+  border-radius: 8px;  /* Optional: rounded corners */
+}
